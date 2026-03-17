@@ -269,7 +269,7 @@ class FontInterface:
 
             path, url = os.path.split(style["file"])
             css_styles.append(
-                f"@font-face {{ font-family: {font_family}; src: url({url}){weight} }}"
+                f"@font-face {{ font-family: '{font_family}'; src: url('{url}'){weight} }}"
             )
         css = " ".join(css_styles)
         return path, css

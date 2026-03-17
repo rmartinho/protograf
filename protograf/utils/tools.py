@@ -1976,22 +1976,22 @@ def html_glyph(text: str, font_name: str, font_size: str = "") -> str:
         if len(items) > 2:
             txt = txt.replace(
                 glp,
-                f'<span style="font-family: {font_name}; font-size: {items[1]}px; color: {items[2]};">{glyph_name}</span>',
+                f"""<span style="font-family: '{font_name}'; font-size: {items[1]}px; color: {items[2]};">{glyph_name}</span>""",
             )
         if len(items) > 1:
             txt = txt.replace(
                 glp,
-                f'<span style="font-family: {font_name}; font-size: {items[1]}px;">{glyph_name}</span>',
+                f"""<span style="font-family: '{font_name}'; font-size: {items[1]}px;">{glyph_name}</span>""",
             )
         else:
             if font_size:
                 txt = txt.replace(
                     glp,
-                    f'<span style="font-family: {font_name}; ; font-size:{font_size}">{glyph_name}</span',
+                    f"""<span style="font-family: '{font_name}'; ; font-size:{font_size}">{glyph_name}</span>""",
                 )
             else:
                 txt = txt.replace(
-                    glp, f'<span style="font-family: {font_name}">{glyph_name}</span'
+                    glp, f"""<span style="font-family: '{font_name}'">{glyph_name}</span>"""
                 )
     if glyphs:
         txt = txt.replace("|!", "").replace("!|", "")

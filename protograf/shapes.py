@@ -3249,7 +3249,7 @@ class TextShape(BaseShape):
             keys = {}
             try:
                 keys["opacity"] = colrs.get_opacity(self.transparency)
-                _font_name = self.font_name.replace(" ", "-")
+                _font_name = self.font_name#.replace(" ", "-")
                 if not fonts.builtin_font(self.font_name):  # local check
                     _, _path, _ = tools.get_font_file(self.font_name)
                 keys["css"] = globals.css
@@ -3259,7 +3259,7 @@ class TextShape(BaseShape):
                     # create a wrapper for the text
                     css_style = []
                     if self.font_name:
-                        css_style.append(f"font-family: {_font_name};")
+                        css_style.append(f"font-family: '{_font_name}';")
                     if self.font_size:
                         css_style.append(f"font-size: {self.font_size}px;")
                     if self.stroke:

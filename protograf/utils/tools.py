@@ -1915,9 +1915,9 @@ def html_img(text: str) -> str:
         if not ext:
             image_name = image_name + ".png"
         if len(items) > 1:
-            txt = txt.replace(img, f'<img src="{image_name}" height={items[1]}>')
+            txt = txt.replace(img, f'<img src="{image_name}" style="vertical-align: middle;" height={items[1]}>')
         else:
-            txt = txt.replace(img, f'<img src="{image_name}">')
+            txt = txt.replace(img, f'<img src="{image_name}" style="vertical-align: middle;">')
     if images:
         txt = txt.replace("|:", "").replace(":|", "")
     # ---- SVG
@@ -1930,11 +1930,11 @@ def html_img(text: str) -> str:
         if not ext:
             image_name = image_name + ".svg"
         if len(items) > 1 and len(items) < 3:
-            txt = txt.replace(img, f'<img src="{image_name}" height={items[1]}>')
+            txt = txt.replace(img, f'<img src="{image_name}" style="vertical-align: middle;" height={items[1]}>')
         elif len(items) >= 3:
-            txt = txt.replace(img, f'<img src="{image_name}" height={items[1]}>')
+            txt = txt.replace(img, f'<img src="{image_name}" style="vertical-align: middle;" height={items[1]}>')
         else:
-            txt = txt.replace(img, f'<img src="{image_name}">')
+            txt = txt.replace(img, f'<img src="{image_name}" style="vertical-align: middle;">')
     if svg_images:
         txt = txt.replace("|;", "").replace(";|", "")
     return txt

@@ -220,6 +220,7 @@ class BaseCanvas:
         )  # NOT transparent
         self.outline = self.defaults.get("outline", None)
         self.outlined = self.defaults.get("outlined", False)
+        self.miter_limit = self.defaults.get("miter_limit", 1)
         # ---- overwrite fill & stroke
         if self.stroke_fill:  # alias
             self.stroke = self.stroke_fill
@@ -886,6 +887,7 @@ class BaseShape:
             kwargs.get("stroke_width_border", base.stroke_width_border)
         )
         self.stroke_ends = kwargs.get("stroke_ends", base.stroke_ends)
+        self.miter_limit = kwargs.get("miter_limit", base.miter_limit)
         # ---- overwrite fill&stroke colors
         if self.fill_stroke and self.outline:
             feedback("Cannot set 'fill_stroke' and 'outline' together!", True)
@@ -2528,6 +2530,8 @@ class BaseShape:
         if _fill_transparency is not None:
             _fill_opacity = tools.as_float(_fill_transparency, "fill_transparency")
             keys["fill_opacity"] = colrs.get_opacity(_fill_opacity)
+
+        keys["miter_limit"] = kwargs.get("miter_limit", 1)
 
         # potential other properties
         # keys['idx'] = 0

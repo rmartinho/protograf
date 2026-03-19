@@ -3246,6 +3246,24 @@ class TextShape(BaseShape):
         elif self.html or self.style:
             # insert_htmlbox(rect, text, *, css=None, scale_low=0,
             #   archive=None, rotate=0, oc=0, opacity=1, overlay=True)
+            def _measure_unused_height_html():
+                temp_pdf = pymupdf.open()
+                temp_page = temp_pdf.new_page(width=rect.width, height=rect.height)
+                temp_page.insert_htmlbox(temp_page.rect, _text, **keys)
+                blocks = temp_page.get_text("blocks", flags=pymupdf.TEXT_PRESERVE_IMAGES)
+                if len(blocks) == 0:
+                    return rect.height
+                last_y = blocks[-1][3]
+                unused_height = temp_page.rect.y1 - last_y
+                return unused_height
+
+            if self.valign:
+                if _lower(self.valign) in ["top", "t"]:
+                    self.valign = "top"
+                elif _lower(self.valign) in ["centre", "center", "c", "middle", "m"]:
+                    self.valign = "centre"
+                elif _lower(self.valign) in ["bottom", "b"]:
+                    self.valign = "bottom"
             keys = {}
             try:
                 keys["opacity"] = colrs.get_opacity(self.transparency)
@@ -3295,9 +3313,14 @@ class TextShape(BaseShape):
                 except Exception:
                     icon_font = "Helvetica"
                 _text = tools.html_glyph(_text, icon_font, icon_size)
-                _height_left, _success = current_page.insert_htmlbox(
-                    rect, _text, **keys
-                )
+                _height_left = _measure_unused_height_html()
+                if self.valign == "centre" or self.valign == "bottom":
+                    _offset = (
+                        _height_left if self.valign == "bottom" else _height_left / 2
+                    )
+                    rect.y0 += _offset
+                    rect.y1 += _offset
+                current_page.insert_htmlbox(rect, _text, **keys)
                 self.height_used = self.height - self.points_to_value(_height_left)
                 # feedback(f"\n*** Text HTML {_height_left=}  {self.height_used=}")
             except ValueError as err:

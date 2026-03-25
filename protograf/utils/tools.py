@@ -1787,7 +1787,7 @@ def get_font_file(fonts_name: object) -> tuple:
         return _name, font_path, _file
     if isinstance(fonts_name, str):
         font_names = [fonts_name]
-    elif isinstance(font_name, list):
+    elif isinstance(fonts_name, list):
         font_names = fonts_name
     else:
         feedback("Font name must be a string or a list of strings!", True)
@@ -1798,15 +1798,15 @@ def get_font_file(fonts_name: object) -> tuple:
             if not _name:  # check for custom font
                 cache_directory = Path(Path.home() / CACHE_DIRECTORY)
                 fi = FontInterface(cache_directory=cache_directory)
-                _name = fi.get_font_family(font_name)
+                _name = fi.get_font_family(_font_name)
                 if not _name:
                     feedback(
-                        f'Cannot find or load a Font named "{font_name}".',
+                        f'Cannot find or load a Font named "{_font_name}".',
                         False,
                         True,
                     )
                 else:
-                    _file = fi.get_font_file(font_name, fullpath=False)
+                    _file = fi.get_font_file(_font_name, fullpath=False)
                     font_path, css = fi.font_file_css(_name)
                     if css not in globals.css:
                         globals.css += css + "\n"

@@ -33,4 +33,4 @@ def feedback(item, stop=False, warn=False, alert=False):
         if hasattr(globals, "pargs") and globals.pargs:
             if globals.pargs.trace:
                 traceback.print_stack()
-        sys.exit()
+        sys.exit(1)
